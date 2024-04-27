@@ -44,8 +44,9 @@ class authService {
       if (!getemail) {
         return res.status(401).json({ status: false, message: 'Email does not exist' });
       } else {
-          const yourotp = Date.now().toString().slice(-6);
 
+        const yourotp = Date.now().toString().slice(-6);
+        
         await otpModel.update({ otp: yourotp }, { where: { email: getemail.email }, raw: true });
 
         return res.status(200).json({ status: true, message: 'OTP sent successfully' });
