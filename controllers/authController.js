@@ -17,5 +17,13 @@ class authController{
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
+    async forgetPassword(req, res, next){
+        try {
+            await authService.forgetPassword(req, res, next);
+        } catch (error) {
+            console.log(error)
+            return res.status(409).json({status: false, message: 'Internal server error'});
+        }
+    }
 }
 module.exports = new authController();
