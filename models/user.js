@@ -13,7 +13,7 @@ const users = sequelize.define("tbl_users", {
         allowNull: false,
       },
       password: {
-        type: Sequelize.STRING(20),
+        type: Sequelize.STRING(150),
         allowNull: false,
       },
       email: {

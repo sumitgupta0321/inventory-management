@@ -25,5 +25,21 @@ class authController{
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
+    async otpVerification(req, res, next){
+        try {
+            await authService.otpVerification(req, res, next);
+        } catch (error) {
+            console.log(error)
+            return res.status(409).json({status: false, message: 'Internal server error'});
+        }
+    }
+    async resetPassword(req, res, next){
+        try {
+            await authService.resetPassword(req, res, next);
+        } catch (error) {
+            console.log(error)
+            return res.status(409).json({status: false, message: 'Internal server error'});
+        }
+    }
 }
 module.exports = new authController();
