@@ -5,7 +5,6 @@ env.config();
 const { STRING_CONSTANTS } = require('../constants/string');
 const Enc = require('enc');
 const nodemailer = require('nodemailer');
-const { StringSchema } = require('yup');
 
 const transporter = nodemailer.createTransport({
   host: 'sandbox.smtp.mailtrap.io',
@@ -17,7 +16,7 @@ const transporter = nodemailer.createTransport({
 });
 
 class authService {
-
+//Methode to signup
   async signup(req, res, next) {
     try {
       const findUser = await userModel.findOne({ where: { email: req.body.email } });
@@ -34,7 +33,7 @@ class authService {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }
-
+//Methode to login
   async login(req, res, next) {
     try {
       const encryptedPassword = Enc.aes192.encode(req.body.password, process.env.PWD_KEY);
@@ -48,6 +47,7 @@ class authService {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }
+  //Methode to forget Password
   async forgetPassword(req, res, next) {
     try {
       const getemail = await userModel.findOne({ where: { email: req.body.email }, raw: true });
@@ -71,7 +71,7 @@ class authService {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR});
     }
   }
-
+//Methode to verify OTP
   async otpVerification(req, res, next) {
     try {
       const getotp = await otpModel.findOne({ where: { email: req.body.email, otp: req.body.otp }, raw: true });
@@ -79,7 +79,7 @@ class authService {
         return res.status(401).json({ status: false, message: STRING_CONSTANTS.OTP_INVALID });
       } else {
         const currentTime = Date.now();
-        const validityTime = 1 * 60 * 1000;
+        const validityTime = 2 * 60 * 1000;
         const updateTime = getotp.updatedAt;
         const timeDifference = currentTime - updateTime;
         const isWithinTime = timeDifference <= validityTime;
@@ -94,7 +94,7 @@ class authService {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }
-
+//Methode to reset password
   async resetPassword(req, res, next) {
     try {
       if (req.body.password !== req.body.confirmPassword) {
