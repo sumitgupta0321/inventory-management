@@ -1,5 +1,5 @@
 const categoryModel = require('../models/category');
-const { STRING_CONSTANTS } = require('../constants/string');
+const { STRING_CONSTANTS } = require('../constants/message');
 
 
 

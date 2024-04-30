@@ -2,7 +2,7 @@ const userModel = require('../models/user');
 const otpModel = require('../models/otp');
 const env = require('dotenv');
 env.config();
-const { STRING_CONSTANTS } = require('../constants/string');
+const { STRING_CONSTANTS } = require('../constants/message');
 const Enc = require('enc');
 const nodemailer = require('nodemailer');
 

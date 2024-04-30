@@ -36,6 +36,8 @@ const STRING_CONSTANTS = {
 	BRAND_DELETE: 'BRAND deleted succsessfully',
 	BRAND_NOT_DELETE: 'Unable to delete brand',
 	BRAND_ALREADY_DELETE: 'brand already deleted',
+/// VALIDATOR MASSAGE
+    EMAIL_REQUIRED: 'Please enter email',
 };
 module.exports = {
 	STRING_CONSTANTS,

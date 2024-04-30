@@ -1,9 +1,9 @@
 const express = require('express');
-const {authController} = require('../controllers');
+const authController = require('../controllers/auth');
 const router = express.Router();
-const {AuthDataValidator} = require('../middleware/dataValidator/index');
+const AuthDataValidator = require('../validator/AuthDataValidator');
 
-router.post('/signup', AuthDataValidator.validateSignupUser, authController.signup);
+router.post('/signup', AuthDataValidator.signup, authController.signup);
 
 router.post('/login', AuthDataValidator.login, authController.login);
 

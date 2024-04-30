@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-const authRouter = require('./authRouter');
-const brandRouter = require('./brandRouter');
-const categoryRouter = require('./categoryRouter');
-const subCategoryRouter = require('./subCategoryRouter');
+const authRouter = require('./auth');
+const brandRouter = require('./brand');
+const categoryRouter = require('./category');
+const subCategoryRouter = require('./sub_category');
 
 
 router.use('/auth', authRouter);

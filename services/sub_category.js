@@ -1,7 +1,7 @@
 const categoryModel = require('../models/category');
 const subCategoryModel = require('../models/subCategory');
 
-const { STRING_CONSTANTS } = require('../constants/string');
+const { STRING_CONSTANTS } = require('../constants/message');
 
 
 

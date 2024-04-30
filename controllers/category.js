@@ -1,38 +1,38 @@
-const {brandService} = require('../services');
+const categoryService = require('../services/category');
 
-class brandController{
+class categoryController{
 
-    async addBrand(req, res, next){
+    async addCategory(req, res, next){
         try {
-            await brandService.addBrand(req, res, next);
+            await categoryService.addCategory(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
-    async listBrand(req, res, next){
+    async listCategory(req, res, next){
         try {
-            await brandService.listBrand(req, res, next);
+            await categoryService.listCategory(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
-    async updateBrand(req, res, next){
+    async updateCategory(req, res, next){
         try {
-            await brandService.updateBrand(req, res, next);
+            await categoryService.updateCategory(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
-    async deleteBrand(req, res, next){
+    async deleteCategory(req, res, next){
         try {
-            await brandService.deleteBrand(req, res, next);
+            await categoryService.deleteCategory(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
 }
-module.exports = new brandController();
+module.exports = new categoryController();

@@ -1,46 +1,45 @@
-const {subCategoryService} = require('../services');
+const authService = require('../services/auth');
 
-class subCategoryController{
-
-    async addSubCategory(req, res, next){
+class authController{
+    async signup(req, res, next){
         try {
-            await subCategoryService.addSubCategory(req, res, next);
+            await authService.signup(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
-    async listSubCategory(req, res, next){
+    async login(req, res, next){
         try {
-            await subCategoryService.listSubCategory(req, res, next);
+            await authService.login(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
-    async listSubCategoryById(req, res, next){
+    async forgetPassword(req, res, next){
         try {
-            await subCategoryService.listSubCategoryById(req, res, next);
+            await authService.forgetPassword(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
-    async updateSubCategory(req, res, next){
+    async otpVerification(req, res, next){
         try {
-            await subCategoryService.updateSubCategory(req, res, next);
+            await authService.otpVerification(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
-    async deleteSubCategory(req, res, next){
+    async resetPassword(req, res, next){
         try {
-            await subCategoryService.deleteSubCategory(req, res, next);
+            await authService.resetPassword(req, res, next);
         } catch (error) {
             console.log(error)
             return res.status(409).json({status: false, message: 'Internal server error'});
         }
     }
 }
-module.exports = new subCategoryController();
+module.exports = new authController();

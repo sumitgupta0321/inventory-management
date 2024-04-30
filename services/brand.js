@@ -1,5 +1,5 @@
 const brandModel = require('../models/brand');
-const { STRING_CONSTANTS } = require('../constants/string');
+const { STRING_CONSTANTS } = require('../constants/message');
 
 
 class brandService {
