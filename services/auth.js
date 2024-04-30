@@ -2,6 +2,7 @@ const userModel = require('../models/user');
 const otpModel = require('../models/otp');
 const env = require('dotenv');
 env.config();
+const jwt = require('jsonwebtoken');
 const { STRING_CONSTANTS } = require('../constants/message');
 const Enc = require('enc');
 const nodemailer = require('nodemailer');
@@ -33,17 +34,26 @@ class authService {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }
+
 //Methode to login
   async login(req, res, next) {
     try {
       const encryptedPassword = Enc.aes192.encode(req.body.password, process.env.PWD_KEY);
-      req.body.password = encryptedPassword;
-      const user = await userModel.findOne({ where: { email: req.body.email, password: req.body.password } });
+      const user = await userModel.findOne({ where: { email: req.body.email, password: encryptedPassword } });
       if (!user) {
         return res.status(403).json({ status: true, message: STRING_CONSTANTS.INVALID_CREDENTIALS });
       }
-      return res.status(200).json({ status: true, message: STRING_CONSTANTS.LOGIN_SUCCESS, data: user });
+      const tokenPayload = {
+        id: user.id,
+        email: user.email,
+        role: user.role
+      };
+      const accessToken = jwt.sign(tokenPayload, process.env.JWT_ACCESS_SECRET, {
+        expiresIn: process.env.JWT_ACCESS_TOKEN_EXPIRY,
+      });
+      return res.status(200).json({ status: true, message: STRING_CONSTANTS.LOGIN_SUCCESS, data: user, access_token: accessToken });
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }

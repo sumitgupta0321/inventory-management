@@ -11,7 +11,7 @@ class brandService {
             if (findBrand) {
                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.BRAND_EXIST });
             }
-            await brandModel.create({ brand_name: req.body.brand_name });
+            await brandModel.create({ brand_name: req.body.brand_name, brand_image: req.body.brand_image });
 
             return res.status(200).json({ status: true, message: STRING_CONSTANTS.BRAND_ADDED });
 
@@ -29,7 +29,7 @@ class brandService {
     }
     async updateBrand(req, res, next) {
         try {
-            const updateBrand = await brandModel.update({ brand_name: req.body.brand_name }, { where: { id: req.params.id } });
+            const updateBrand = await brandModel.update({ brand_name: req.body.brand_name, brand_image: req.body.brand_image }, { where: { id: req.params.id } });
             if (updateBrand) {
                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.BRAND_UPDATE });
             }

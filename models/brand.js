@@ -12,6 +12,10 @@ const brands = sequelize.define("tbl_brands", {
         allowNull: false,
         unique: true, 
       },
+      brand_image: {
+        type: Sequelize.STRING(200),
+        allowNull: true,
+      },
       status: {
         type: Sequelize.TINYINT(1),
         allowNull: false,

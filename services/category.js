@@ -13,7 +13,7 @@ class categoryService {
             if (findCategory) {
                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_EXIST });
             }
-            await categoryModel.create({ category_name: req.body.category_name });
+            await categoryModel.create({ category_name: req.body.category_name, category_image: req.body.category_image });
 
             return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_ADDED });
 
@@ -33,7 +33,7 @@ class categoryService {
 
     async updateCategory(req, res, next) {
         try {
-            const updateCategory = await categoryModel.update({ category_name: req.body.category_name }, { where: { id: req.params.id } });
+            const updateCategory = await categoryModel.update({ category_name: req.body.category_name, category_image: req.body.category_image }, { where: { id: req.params.id } });
             if (updateCategory) {
                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_UPDATE });
             }

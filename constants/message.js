@@ -1,9 +1,10 @@
 const STRING_CONSTANTS = {
 
 	INTERNAL_ERROR: 'Internal server error',
-    NEW_USER_ADD: 'New user resistered succsessfully',
+	NEW_USER_ADD: 'New user resistered succsessfully',
 	EXISTING_EMAIL: 'Email already registered',
 	EMAIL_NOT_EXISTED: 'Email does not exist',
+	EMAIL_INVALID: 'Please enter valid email',
 	LOGIN_SUCCESS: 'Login Successfully',
 	INVALID_CREDENTIALS: 'Invalid User Credentials',
 	OTP_SENT: 'OTP sent successfully on your email',
@@ -36,9 +37,29 @@ const STRING_CONSTANTS = {
 	BRAND_DELETE: 'BRAND deleted succsessfully',
 	BRAND_NOT_DELETE: 'Unable to delete brand',
 	BRAND_ALREADY_DELETE: 'brand already deleted',
-/// VALIDATOR MASSAGE
-    EMAIL_REQUIRED: 'Please enter email',
+	/// AUTH VALIDATOR MASSAGE
+	EMAIL_REQUIRED: 'Please enter email',
+	PASWORD_REQUIRED: 'Please Enter Password',
+	CONFIRM_PASWORD_REQUIRED: 'Please Enter Password',
+	INVALID_PASSWORD: 'Please password must contain at least one uppercase letter, one number, one special character, and be at least 8 characters long',
+	INVALID_CONFIRM_PASSWORD: 'Please confirm password must contain at least one uppercase letter, one number, one special character, and be at least 8 characters long',
+	NAME_REQUIRE: 'Please enter name',
+	COUNTRY_CODE_REQUIRE: 'Please enter country code',
+	MOBILE_REQUIRE: 'Please Enter Mobile number',
+	INVAILD_MOBILE: 'Please enter valid mobile number',
+	ROLE_REQUIRE: 'Please enter role',
+	OTP_REQUIRE: 'please enter OTP',
+	OTP_INNCORRECT: 'Please enter a valid OTP',
+	//Category MESSAGE
+
+	CATEGORY_NAME_REQUIRE: 'Please enter category name',
+	SUB_CATEGORY_NAME_REQUIRE: 'Please enter sub-category name',
+
+	//Brand messages
+	BRAND_NAME_REQUIRE: 'Please enter brand name',
+	
 };
+
 module.exports = {
 	STRING_CONSTANTS,
 };

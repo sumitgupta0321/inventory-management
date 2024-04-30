@@ -12,6 +12,10 @@ const categories = sequelize.define("tbl_categories", {
         allowNull: false,
         unique: true, 
       },
+      category_image: {
+        type: Sequelize.STRING(200),
+        allowNull: true,
+      },
       status: {
         type: Sequelize.TINYINT(1),
         allowNull: false,

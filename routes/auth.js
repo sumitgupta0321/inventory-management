@@ -1,7 +1,7 @@
 const express = require('express');
 const authController = require('../controllers/auth');
 const router = express.Router();
-const AuthDataValidator = require('../validator/AuthDataValidator');
+const AuthDataValidator = require('../validator/auth_validator');
 
 router.post('/signup', AuthDataValidator.signup, authController.signup);
 
@@ -11,7 +11,7 @@ router.post('/forget_password', AuthDataValidator.forgetPassword, authController
 
 router.post('/otp_verification', AuthDataValidator.otpVerification, authController.otpVerification);
 
-router.put('/reset_password', authController.resetPassword);
+router.put('/reset_password', AuthDataValidator.restPassword, authController.resetPassword);
 
 
 
