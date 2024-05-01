@@ -1,5 +1,5 @@
-const { STRING_CONSTANTS } = require('../constants/message');
-const { VALID_EMAIL, VALID_PASSWORD , VALID_OTP} = require('../constants/regex');
+const { STRING_CONSTANTS } = require('../../constants/message');
+const { VALID_EMAIL, VALID_PASSWORD , VALID_OTP} = require('../../constants/regex');
 class AuthDataValidator {
    
  signup(req, res, next) {
@@ -56,7 +56,7 @@ class AuthDataValidator {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR});
     }
   }
-  forgetPassword(req, res, next){
+  forget_password(req, res, next){
     try {
       const {email} = req.body;
       if (!email) {
@@ -70,7 +70,7 @@ class AuthDataValidator {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR});
     }
   }
-  otpVerification(req, res, next){
+  otp_verification(req, res, next){
     try {
       const {email,  otp} = req.body;
       if (!email) {
@@ -90,7 +90,7 @@ class AuthDataValidator {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR});
     }
     }
-    restPassword(req, res, next){
+    rest_password(req, res, next){
       try {
         const {email, password, confirmPassword} = req.body;
         if (!email) {

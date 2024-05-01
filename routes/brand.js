@@ -1,7 +1,7 @@
 const express = require('express');
 const brandController = require('../controllers/brand');
 const validateToken = require('../middleware/validateToken');
-const brand_Validator = require('../validator/brand_validator');
+const brand_Validator = require('../middleware/validator/brand_validator');
 const router = express.Router();
 
 

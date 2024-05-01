@@ -1,6 +1,6 @@
 const express = require('express');
 const categoryController = require('../controllers/category');
-const category_Validator = require('../validator/category_validator');
+const category_Validator = require('../middleware/validator/category_validator');
 const router = express.Router();
 
 

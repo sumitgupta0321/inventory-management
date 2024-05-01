@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 var env = require("dotenv");
+const { STRING_CONSTANTS } = require('../constants/message');
 env.config();
 
 class ValidateToken{
@@ -12,6 +13,9 @@ class ValidateToken{
                 return res.status(401).json({status: false, message: "Access Token Expired"})
             }else{
                 req.decoded = result;
+                if (result.role !== 'admin') {
+                    return res.status(403).json({ status: false, message: STRING_CONSTANTS.ADMIN_ONLY });
+                }
                 next();
             }
         });

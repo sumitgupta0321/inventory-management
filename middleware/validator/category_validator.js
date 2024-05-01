@@ -1,4 +1,4 @@
-const { STRING_CONSTANTS } = require('../constants/message');
+const { STRING_CONSTANTS } = require('../../constants/message');
 class CategoryValidator {
    
  category(req, res, next) {

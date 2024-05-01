@@ -57,7 +57,10 @@ const STRING_CONSTANTS = {
 
 	//Brand messages
 	BRAND_NAME_REQUIRE: 'Please enter brand name',
+
+	ADMIN_ONLY: 'Only admin can do this',
 	
+	ACCESS_EXPIRED: 'Access token expired'
 };
 
 module.exports = {

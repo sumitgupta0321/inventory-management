@@ -4,6 +4,7 @@ const env = require('dotenv');
 env.config();
 const jwt = require('jsonwebtoken');
 const { STRING_CONSTANTS } = require('../constants/message');
+const { getEmailTemplate } = require('../constants/emailtemplate');
 const Enc = require('enc');
 const nodemailer = require('nodemailer');
 
@@ -17,7 +18,7 @@ const transporter = nodemailer.createTransport({
 });
 
 class authService {
-//Methode to signup
+  //Methode to signup
   async signup(req, res, next) {
     try {
       const findUser = await userModel.findOne({ where: { email: req.body.email } });
@@ -35,7 +36,7 @@ class authService {
     }
   }
 
-//Methode to login
+  //Methode to login
   async login(req, res, next) {
     try {
       const encryptedPassword = Enc.aes192.encode(req.body.password, process.env.PWD_KEY);
@@ -57,7 +58,7 @@ class authService {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }
-  //Methode to forget Password
+
   async forgetPassword(req, res, next) {
     try {
       const getemail = await userModel.findOne({ where: { email: req.body.email }, raw: true });
@@ -65,23 +66,26 @@ class authService {
         return res.status(401).json({ status: false, message: STRING_CONSTANTS.EMAIL_NOT_EXISTED });
       } else {
         const yourotp = Date.now().toString().slice(-6);
+        const name = getemail.name.toUpperCase();
+        // Update OTP in the database
         await otpModel.update({ otp: yourotp }, { where: { email: getemail.email }, raw: true });
-
+        const emailTemplate = getEmailTemplate(yourotp, name);
+        // Send email with HTML template
         transporter.sendMail({
           from: 'Inventory Management',
           to: getemail.email,
           subject: 'Your OTP',
-          text: `Your OTP is: ${yourotp} and it will expire in 2 minutes`,
+          html: emailTemplate,
         });
-
         return res.status(200).json({ status: true, message: STRING_CONSTANTS.OTP_SENT });
       }
     } catch (error) {
       console.log(error);
-      return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR});
+      return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }
-//Methode to verify OTP
+
+  //Methode to verify OTP
   async otpVerification(req, res, next) {
     try {
       const getotp = await otpModel.findOne({ where: { email: req.body.email, otp: req.body.otp }, raw: true });
@@ -104,7 +108,7 @@ class authService {
       return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
     }
   }
-//Methode to reset password
+  //Methode to reset password
   async resetPassword(req, res, next) {
     try {
       if (req.body.password !== req.body.confirmPassword) {

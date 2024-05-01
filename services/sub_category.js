@@ -3,9 +3,6 @@ const subCategoryModel = require('../models/subCategory');
 
 const { STRING_CONSTANTS } = require('../constants/message');
 
-
-
-
 class subCategoryService {
 
     async addSubCategory(req, res, next) {
