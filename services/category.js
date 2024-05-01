@@ -11,7 +11,11 @@ class categoryService {
         try {
             const findCategory = await categoryModel.findOne({ where: { category_name: req.body.category_name } });
             if (findCategory) {
-                return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_EXIST });
+                const lower_category_name = findCategory.category_name.toLowerCase();
+                const lower_body_category_name = req.body.category_name.toLowerCase();
+                if (lower_category_name === lower_body_category_name) {
+                    return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_EXIST });
+                }
             }
             await categoryModel.create({ category_name: req.body.category_name, category_image: req.body.category_image });
 

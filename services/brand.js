@@ -34,12 +34,22 @@ class brandService {
     }
     async updateBrand(req, res, next) {
         try {
+            const findBrand = await brandModel.findOne({ where: { brand_name: req.body.brand_name } });
+            console.log(findBrand)
+            if (findBrand) {
+                const lower_brand_name = findBrand.brand_name.toLowerCase();
+                const lower_body_brand_name = req.body.brand_name.toLowerCase();
+                if (lower_brand_name === lower_body_brand_name) {
+                    return res.status(200).json({ status: true, message: STRING_CONSTANTS.BRAND_EXIST });
+                }
+            }
             const updateBrand = await brandModel.update({ brand_name: req.body.brand_name, brand_image: req.body.brand_image }, { where: { id: req.params.id } });
             if (updateBrand) {
                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.BRAND_UPDATE });
             }
             return res.status(403).json({ status: true, message: STRING_CONSTANTS.BRAND_NOT_UPDATE });
         } catch (error) {
+            console.log(error)
             return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
         }
     }
