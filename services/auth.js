@@ -74,7 +74,7 @@ class authService {
         transporter.sendMail({
           from: 'Inventory Management',
           to: getemail.email,
-          subject: 'Your OTP',
+          subject: 'Inventory-Management-System',
           html: emailTemplate,
         });
         return res.status(200).json({ status: true, message: STRING_CONSTANTS.OTP_SENT });

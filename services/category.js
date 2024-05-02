@@ -35,8 +35,37 @@ class categoryService {
         }
     }
 
+    // async updateCategory(req, res, next) {
+    //     try {
+    //         const findCategory = await categoryModel.findOne({ where: { category_name: req.body.category_name } });
+    //         if (findCategory) {
+    //             const lower_category_name = findCategory.category_name.toLowerCase();
+    //             const lower_body_category_name = req.body.category_name.toLowerCase();
+    //             if (lower_category_name === lower_body_category_name ) {
+    //                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_EXIST });
+    //             }
+    //         }
+    //         const updateCategory = await categoryModel.update({ category_name: req.body.category_name, category_image: req.body.category_image }, { where: { id: req.params.id } });
+    //         if (updateCategory) {
+    //             return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_UPDATE });
+    //         }
+    //         return res.status(403).json({ status: true, message: STRING_CONSTANTS.CATEGORY_NOT_UPDATE });
+    //     } catch (error) {
+    //         return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
+    //     }
+    // }
     async updateCategory(req, res, next) {
         try {
+            const findCategory = await categoryModel.findOne({ where: { category_name: req.body.category_name } });
+            if (findCategory.id != req.params.id) {
+            if (findCategory) {
+                const lower_category_name = findCategory.category_name.toLowerCase();
+                const lower_body_category_name = req.body.category_name.toLowerCase();
+                if (lower_category_name === lower_body_category_name ) {
+                    return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_EXIST });
+                }
+            }
+        }
             const updateCategory = await categoryModel.update({ category_name: req.body.category_name, category_image: req.body.category_image }, { where: { id: req.params.id } });
             if (updateCategory) {
                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.CATEGORY_UPDATE });
@@ -46,6 +75,7 @@ class categoryService {
             return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
         }
     }
+    
     async deleteCategory(req, res, next) {
         try {
             const findCategory = await categoryModel.findOne({where:{ id: req.params.id}})

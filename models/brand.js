@@ -10,7 +10,6 @@ const brands = sequelize.define("tbl_brands", {
       brand_name: {
         type: Sequelize.STRING(20),
         allowNull: false,
-        unique: true, 
       },
       brand_image: {
         type: Sequelize.STRING(200),

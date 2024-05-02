@@ -37,27 +37,29 @@ class subCategoryService {
                     },
                 ]
             })
-      const correctdata = listCategories.map(user => ({
-        id: user.id,
-        category_id: user.category_id,
-        category_name: user.category.category_name,
-        sub_category_name: user.sub_category_name,
-        status: user.status,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        
-      }));
+            const correctdata = listCategories.map(user => ({
+                id: user.id,
+                category_id: user.category_id,
+                category_name: user.category.category_name,
+                sub_category_name: user.sub_category_name,
+                status: user.status,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+
+            }));
             return res.status(200).json({ status: true, message: STRING_CONSTANTS.SUB_CATEGORY_LIST, data: correctdata });
         } catch (error) {
             return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
         }
     }
-    
+
     async listSubCategoryById(req, res, next) {
         try {
             const listCategories = await subCategoryModel.findAll({
-                where: { status: 1,
-                category_id: req.params.category_id },
+                where: {
+                    status: 1,
+                    category_id: req.params.category_id
+                },
                 order: [['createdAt', 'DESC']],
                 include: [
                     {
@@ -68,16 +70,16 @@ class subCategoryService {
                     },
                 ]
             })
-      const correctdata = listCategories.map(user => ({
-        id: user.id,
-        category_id: user.category_id,
-        category_name: user.category.category_name,
-        sub_category_name: user.sub_category_name,
-        status: user.status,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt,
-        
-      }));
+            const correctdata = listCategories.map(user => ({
+                id: user.id,
+                category_id: user.category_id,
+                category_name: user.category.category_name,
+                sub_category_name: user.sub_category_name,
+                status: user.status,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+
+            }));
             return res.status(200).json({ status: true, message: STRING_CONSTANTS.SUB_CATEGORY_LIST, data: correctdata });
         } catch (error) {
             return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
@@ -85,19 +87,34 @@ class subCategoryService {
     }
     async updateSubCategory(req, res, next) {
         try {
-            const updateSubCategory = await subCategoryModel.update({ sub_category_name: req.body.sub_category_name, category_id: req.body.category_id}, { where: { id: req.params.id } });
-            if (updateSubCategory) {
-                return res.status(200).json({ status: true, message: STRING_CONSTANTS.SUB_CATEGORY_UPDATE });
+            const findSubCategory = await subCategoryModel.findOne({ where: { sub_category_name: req.body.sub_category_name, category_id: req.body.category_id } });
+
+            if (findSubCategory && findSubCategory.id != req.params.id) {
+                const lower_sub_category_name = findSubCategory.sub_category_name.toLowerCase();
+                const lower_body_sub_category_name = req.body.sub_category_name.toLowerCase();
+
+                if (lower_sub_category_name === lower_body_sub_category_name) {
+                    return res.status(200).json({ status: true, message: STRING_CONSTANTS.SUB_CATEGORY_EXIST });
+                }
             }
-            return res.status(403).json({ status: true, message: STRING_CONSTANTS.SUB_CATEGORY_NOT_UPDATE });
+            const updateSubCategory = await subCategoryModel.update(
+                { sub_category_name: req.body.sub_category_name, category_id: req.body.category_id },
+                { where: { id: req.params.id } }
+            );
+            if (updateSubCategory[0] !== 0) {
+                return res.status(200).json({ status: true, message: STRING_CONSTANTS.SUB_CATEGORY_UPDATE });
+            } else {
+                return res.status(403).json({ status: false, message: STRING_CONSTANTS.SUB_CATEGORY_NOT_UPDATE });
+            }
         } catch (error) {
+            console.log(error);
             return res.status(500).json({ status: false, message: STRING_CONSTANTS.INTERNAL_ERROR });
         }
     }
     async deleteSubCategory(req, res, next) {
         try {
-            const findSubCategory = await subCategoryModel.findOne({where:{ id: req.params.id}})
-            if(findSubCategory.status==0){
+            const findSubCategory = await subCategoryModel.findOne({ where: { id: req.params.id } })
+            if (findSubCategory.status == 0) {
                 return res.status(200).json({ status: true, message: STRING_CONSTANTS.SUB_CATEGORY_ALREADY_DELETE });
             }
             const deleteCategory = await subCategoryModel.update({ status: 0 }, { where: { id: req.params.id } });
